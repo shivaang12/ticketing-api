@@ -15,8 +15,8 @@ def login():
             print (r.UserName)
         return jsonify(success=True), 200
     except:
-        return jsonify(success=False), 404
-    return jsonify(success=False), 404
+        return jsonify(success=False), 400
+    return jsonify(success=False), 400
 
 
 @app.route('/api/register', methods=['POST'])
@@ -33,11 +33,11 @@ def register():
         # TODO: Check for unique username and email
         username_query_result = db.session.query(main_user).filter(main_user.UserName == data['UserName'])
         if username_query_result:
-            return jsonify({'message' : 'Username you entered exist in database. Please enter another!'}), 404
+            return jsonify({'message' : 'Username you entered exist in database. Please enter another!'}), 400
         
         email_query_result = db.session.query(main_user).filter(main_user.EmailAddress == data['EmailAddress'])
         if email_query_result:
-            return jsonify({'message' : 'Email you entered have already registered. Please enter another or request password change!'}), 404
+            return jsonify({'message' : 'Email you entered have already registered. Please enter another or request password change!'}), 400
         # TODO: Admin Athentication for Registration
 
         user_add = main_user(
@@ -54,4 +54,4 @@ def register():
         db.session.add(user_add)
         db.session.commit()
         return jsonify(success=True), 200
-    return jsonify(success=False)
+    return jsonify(success=False), 400
