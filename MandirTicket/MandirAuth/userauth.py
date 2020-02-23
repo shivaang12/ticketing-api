@@ -4,6 +4,7 @@ import jwt
 
 from MandirTicket import app, db, main_user
 
+
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -11,19 +12,18 @@ def token_required(f):
 
         if 'x-access-token' in request.headers:
             token = request.headers['x-access-token']
-        
+
         if not token:
-            return jsonify({'message' : 'Token is missing!'}), 401
-        
-        print ("Before token data ", token)
+            return jsonify({'message': 'Token is missing!'}), 401
+
+        print("Before token data ", token)
 
         try:
             token_data = jwt.decode(token, app.config["SECRET_KEY"])
-            print ("got token data ", token_data['UserName'])
-            current_user = db.session.query(main_user).filter(main_user.UserName == token_data['UserName']).first()
-            print ("Current User name ", current_user.FirstName)
+            current_user = db.session.query(main_user).filter(
+                main_user.UserName == token_data['UserName']).first()
         except:
-            return jsonify({'message' : 'Token is in valid!'})
-        
+            return jsonify({'message': 'Token is in valid!'}), 401
+
         return f(current_user, *args, **kwargs)
     return decorated
