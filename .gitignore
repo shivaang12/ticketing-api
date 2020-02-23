@@ -1,2 +1,4 @@
 .vscode/
 MandirTicket/__pycache__/
+MandirTicket/MandirAuth/__pycache__/
+MandirTicket/MandirRoutes/__pycache__/
