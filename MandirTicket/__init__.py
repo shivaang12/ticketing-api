@@ -1,4 +1,3 @@
-from MandirTicket.MandirRoutes import main_routes, fetch_routes
 import flask
 import urllib
 from flask import request, jsonify
@@ -18,3 +17,5 @@ db = SQLAlchemy(app)
 Base = automap_base()
 Base.prepare(db.engine, reflect=True)
 main_user = Base.classes.User
+
+from MandirTicket.MandirRoutes import main_routes, fetch_routes

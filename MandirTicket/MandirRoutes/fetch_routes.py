@@ -6,6 +6,7 @@ from MandirTicket.MandirAuth import userauth
 
 @app.route('/api/query', methods=['POST'])
 @userauth.token_required
+@userauth.admin_required
 def query(current_user):
     error = None
     try:

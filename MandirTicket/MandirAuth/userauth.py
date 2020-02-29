@@ -27,3 +27,13 @@ def token_required(f):
 
         return f(current_user, *args, **kwargs)
     return decorated
+
+def admin_required(f):
+    @wraps(f)
+    def decorated(current_user, *args, **kwargs):
+        if not current_user.RoleID == 1:
+            return jsonify({'message': 'Unauthorized'}), 401
+        
+        return f(current_user, *args, **kwargs)
+    return decorated
+
